@@ -1,18 +1,18 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { BackgroundBeams } from "@/components/beams";
+import DotPattern from "@/components/magicui/dot-pattern";
 import { Search } from "@/components/search";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
+import Document from "@/components/document";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
   return (
     <div>
       <div className="flex justify-between items-center px-10 py-2">
-        <div className="font-bold">Nyay</div>
+        <div className="font-bold">Nyay Sanhita</div>
         <div>
           <div className="text-[14px] border-[1px] bg-black text-white rounded-full px-3 py-1 flex">
             Feedback
@@ -22,14 +22,11 @@ export default function Home() {
       <div className="flex justify-center items-center h-[80vh]">
         <div className="flex flex-col text-center">
           <div className="text-5xl font-bold">Search. Learn. Debate.</div>
-          <div className="text-xl font-light mt-2">
-            Search for all legal documents
-          </div>
+          <div className="text-xl  mt-2">Search for all legal documents</div>
           <Search open={open} setOpen={setOpen} />
           <div
             className="bg-[rgb(24,24,27)] mt-4 w-[40vw] rounded-md text-white text-left py-4 px-4 font-light text-sm cursor-text flex justify-between"
             onClick={() => {
-              console.log("testtt");
               setOpen(true);
             }}
           >
@@ -50,7 +47,16 @@ export default function Home() {
           </div>
         </div>
       </div>
-      {/* <BackgroundBeams /> */}
+      <Document
+        title="Document Preview"
+        data="Welcome to the Document Preview component, a powerful tool designed to provide a clean and responsive way to view the text content of your PDF or DOC files. This component offers a minimalist design that focuses on readability, making it easy to navigate and consume your documents."
+      />
+
+      <DotPattern
+        className={cn(
+          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)] -z-10"
+        )}
+      />
     </div>
   );
 }
