@@ -6,9 +6,12 @@ import { Search } from "@/components/search";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Document from "@/components/document";
+import { search, main_data } from "@/data";
 
 export default function Home() {
   const [open, setOpen] = useState(false);
+  const [ipc, setIpc] = useState("");
+
   return (
     <div>
       <div className="flex justify-between items-center px-10 py-2">
@@ -20,12 +23,12 @@ export default function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center h-[80vh]">
-        <div className="flex flex-col text-center">
+        <div className="flex flex-col justify-center items-center text-center">
           <div className="text-5xl font-bold">Search. Learn. Debate.</div>
           <div className="text-xl  mt-2">Search for all legal documents</div>
-          <Search open={open} setOpen={setOpen} />
+          <Search open={open} setOpen={setOpen} setIpc={setIpc} />
           <div
-            className="bg-[rgb(24,24,27)] mt-4 w-[40vw] rounded-md text-white text-left py-4 px-4 font-light text-sm cursor-text flex justify-between"
+            className="bg-[rgb(24,24,27)] mt-4 w-[80vw] md:w-[40vw] rounded-md text-white text-left py-4 px-4 font-light text-sm cursor-text flex justify-between"
             onClick={() => {
               setOpen(true);
             }}
@@ -47,10 +50,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Document
-        title="Document Preview"
-        data="Welcome to the Document Preview component, a powerful tool designed to provide a clean and responsive way to view the text content of your PDF or DOC files. This component offers a minimalist design that focuses on readability, making it easy to navigate and consume your documents."
-      />
+      {ipc && (
+        <Document title={main_data[ipc].title} data={main_data[ipc].content} />
+      )}
 
       <DotPattern
         className={cn(

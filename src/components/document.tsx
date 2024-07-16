@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Fragment } from "react";
 
 export default function Document({
   title = "Document Preview",
@@ -7,6 +8,23 @@ export default function Document({
   title: string;
   data: string;
 }) {
+  const formatData = (data) => {
+    return data.split("<br>").map((item, index) => {
+      // Handling long sequences of <br> tags
+      if (item.includes("********************************")) {
+        return (
+          <Fragment key={index}>
+            <div className="separator">********************************</div>
+            <div>{item.replace("********************************", "")}</div>
+          </Fragment>
+        );
+      }
+      // Regular line break
+      return (
+        <div key={index} dangerouslySetInnerHTML={{ __html: item.trim() }} />
+      );
+    });
+  };
   return (
     <div className="flex flex-col h-full w-full max-w-6xl mx-auto">
       <div className="flex items-center justify-between px-6 py-4 border-b">
@@ -29,11 +47,7 @@ export default function Document({
         </div> */}
       </div>
       <div className="flex-1 overflow-auto p-6">
-        <div className="prose text-sm max-w-none">
-          {data.split("\n").map((line, index) => (
-            <p key={index}>{line}</p>
-          ))}
-        </div>
+        <div className="prose text-md max-w-none">{formatData(data)}</div>
       </div>
     </div>
   );
